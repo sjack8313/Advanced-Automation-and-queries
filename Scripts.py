@@ -1,4 +1,3 @@
-Advanced Security Projects for GitHub
 
 
 # ============================
@@ -12,13 +11,14 @@ import json
 # Inputs: query name and a result threshold
 # Output: dictionary with alert title, condition, linked search, and SOAR action name
 
-def create_alert_payload(query_name, threshold):  # Can be tied to Splunk alert API or saved search automation endpoint  # Generates a JSON payload for alerting systems
+def create_alert_payload(query_name, threshold):  # Can be tied to Splunk alert API or saved search automation endpoint
+    # 🔁 Replace 'SOAR-playbook-X' with the correct SOAR action or webhook used in your environment
     return {
         "title": f"Detection: {query_name}",
         "trigger_condition": f"count > {threshold}",
         "search_query": f"savedsearch:{query_name}",
         "severity": "medium",
-        "actions": ["SOAR-playbook-X"]
+        "actions": ["SOAR-playbook-X"]  # 🔁 Replace with the actual SOAR playbook ID or name
     }
 
 # Sample usage:
@@ -38,8 +38,9 @@ import requests
 # Returns key attributes like malicious score and country of origin
 
 def enrich_ip(ip):  # Connects to Splunk SOAR or Phantom as an alert enrichment block
-    vt_key = "REPLACE_VT_API"
-    ab_key = "REPLACE_AB_API"
+    # 🔁 Replace the API keys and ensure internet access to run enrichment lookups in a live environment
+    vt_key = "REPLACE_VT_API"  # 🔁 Replace with your actual VirusTotal API key
+    ab_key = "REPLACE_AB_API"  # 🔁 Replace with your actual AbuseIPDB API key
 
     vt = requests.get(f"https://www.virustotal.com/api/v3/ip_addresses/{ip}",  # Sends a request to VirusTotal API/api/v3/ip_addresses/{ip}",
                       headers={"x-apikey": vt_key}).json()
@@ -92,11 +93,14 @@ def assign_risk(alert):  # Designed to plug into a SOAR playbook for contextual 
 # Simulates IR logic and prints ticket creation steps
 
 def incident_workflow(ip):  # Connects to Splunk SOAR, XSOAR, or custom IR workflow for end-to-end triage
+    # 'ip' here represents the source IP of the alert or event under investigation
+    # This value is typically passed in automatically from the alert context or parsed from Splunk/Cloud logs
+    # For testing or manual runs, you can use a public IP like '8.8.8.8' or a simulated attacker IP
     details = enrich_ip(ip)  # Enriches alert with threat intelligence scores
     print(f"Triage Result for {ip} → Risk: {details['vt_malicious']} VT | {details['abuse_score']} AbuseIPDB")
     print("Creating ticket in ServiceNow...")  # Simulates sending an incident to ticketing system
     # Simulated API call
-    print("Ticket ID: INC1234567 created.")
+    print("Ticket ID: INC1234567 created.")  # 🔁 Replace with logic to create a real ticket if integrating into ServiceNow API
 
 # Used for: Replicating SOAR/IR automation logic for ticketed workflows
 # incident_workflow("8.8.8.8")
