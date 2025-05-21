@@ -1,1 +1,1 @@
-## Please Look at the step by step code of how each individual source of code can be followed in my enviuorment without exposing any certain details, can be copiede for other produciton enviroment but change certina API, IP, account credentials when needed.
+## Please Look at the step by step code of how each individual source of code can be followed in my enviroment without exposing any certain details, can be copiede for other produciton enviroment but change certina API, IP, account credentials when needed.
